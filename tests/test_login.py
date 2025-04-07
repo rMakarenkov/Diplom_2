@@ -1,10 +1,11 @@
 import json
+
 import allure
 import pytest
 
 from api_client import ApiClient
 from data.data import ResponseUserData
-from urls import API_LOGIN_OR_DEL
+from urls import API_LOGIN
 
 
 @pytest.mark.login_user
@@ -19,7 +20,7 @@ class TestLoginUser:
             'password': json.loads(response_create_user.request.body)['password']
         }
         # Act
-        response_login_user = ApiClient.post(url=API_LOGIN_OR_DEL, headers=None, data=login_payload)
+        response_login_user = ApiClient.post(url=API_LOGIN, data=login_payload)
         # Assert
         assert response_login_user.status_code == 200
         assert response_login_user.json()['user']['email'] == login_payload['email'].lower()
@@ -34,7 +35,7 @@ class TestLoginUser:
         }
         payload[key] = payload.get(key) + '_'
         # Act
-        response = ApiClient.post(url=API_LOGIN_OR_DEL, headers=None, data=payload)
+        response = ApiClient.post(url=API_LOGIN, data=payload)
         # Assert
         assert response.status_code == 401
         assert response.json() == ResponseUserData.INCORRECT_DATA_RESPONSE

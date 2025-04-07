@@ -1,9 +1,10 @@
 import json
+
 import allure
 import pytest
 
 from api_client import ApiClient
-from data.data import ResponseUserData
+from data.data import ResponseUserData, RequestUserData
 from helper import Helper
 from urls import API_REGISTER
 
@@ -29,7 +30,7 @@ class TestCreateUser:
             'password': json.loads(response_new_user.request.body)['password'],
         }
         # Act
-        response_already_exist_user = ApiClient.post(url=API_REGISTER, headers=None, data=payload_already_exist_user)
+        response_already_exist_user = ApiClient.post(url=API_REGISTER, data=payload_already_exist_user)
         # Assert
         assert response_already_exist_user.status_code == 403
         assert response_already_exist_user.json() == ResponseUserData.USER_EXISTS_RESPONSE
@@ -38,15 +39,14 @@ class TestCreateUser:
     @pytest.mark.parametrize('key', ['email', 'name', 'password'], ids=lambda x: f'{x} missing')
     def test_create_new_user_required_key_missing_failed(self, key):
         # Arrange
-        lenth = 7
         paylaod = {
-            'email': f'{Helper.generate_random_string(lenth)} + @yandex.ru',
-            'name': Helper.generate_random_string(lenth),
-            'password': Helper.generate_random_string(lenth)
+            'email': f'{Helper.generate_random_string(RequestUserData.LENTH_KEYS_USER)} + @yandex.ru',
+            'name': Helper.generate_random_string(RequestUserData.LENTH_KEYS_USER),
+            'password': Helper.generate_random_string(RequestUserData.LENTH_KEYS_USER)
         }
         paylaod.pop(key)
         # Act
-        response = ApiClient.post(url=API_REGISTER, headers=None, data=paylaod)
+        response = ApiClient.post(url=API_REGISTER, data=paylaod)
         # Assert
         assert response.status_code == 403
         assert response.json() == ResponseUserData.INCOMPLETE_DATA_RESPONSE

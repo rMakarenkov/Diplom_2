@@ -4,7 +4,7 @@ import pytest
 from api_client import ApiClient
 from data.data import RequestUserData, ResponseUserData
 from helper import Helper
-from urls import API_UPDATE_USER
+from urls import API_UPDATE_USERS
 
 
 @pytest.mark.update_user
@@ -21,7 +21,8 @@ class TestCreateUser:
                    key: Helper.generate_random_string(RequestUserData.LENTH_KEYS_USER) if key == 'name'
                    else Helper.generate_random_string(RequestUserData.LENTH_KEYS_USER).lower() + '@yandex.ru'}
         # Act
-        response_update_user = ApiClient.patch(url=API_UPDATE_USER, headers={'Authorization': f'{token}'}, data=payload)
+        response_update_user = ApiClient.patch(url=API_UPDATE_USERS, headers={'Authorization': f'{token}'},
+                                               data=payload)
         # Assert
         assert response_update_user.status_code == 200
         assert response_update_user.json()['user'][key] == payload[key]
@@ -29,7 +30,7 @@ class TestCreateUser:
     @allure.title('Обновление информации о пользователе без авторизации. Ожидаемый ответ: 401')
     def test_change_user_data_valid_data_without_authorize_failed(self, create_new_user):
         # Act
-        response_update_user = ApiClient.patch(url=API_UPDATE_USER, headers=None,
+        response_update_user = ApiClient.patch(url=API_UPDATE_USERS, headers=None,
                                                data={'email': 'upd' + create_new_user.json()['user']['email'],
                                                      'name': 'upd' + create_new_user.json()['user']['name']})
         # Assert

@@ -51,3 +51,8 @@ class ResponseOrderData:
         "success": False,
         "message": "Ingredient ids must be provided"
     }
+
+    SHOULD_BE_AUTHORIZED_RESPONSE = {
+        "success": False,
+        "message": "You should be authorised"
+    }
