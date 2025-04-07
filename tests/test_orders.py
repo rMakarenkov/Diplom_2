@@ -13,15 +13,14 @@ class TestCreateOrder:
     @allure.title('Создание заказа с ингредиентами под авторизованным пользователем. Ожидаемый результат: 200')
     def test_create_new_order_with_authorization_and_ingredients_successfully_created(self, create_new_user):
         # Arrange
-        response_create_user = create_new_user
-        token = response_create_user.json()['accessToken']
+        token = create_new_user.json()['accessToken']
         payload = RequestOrderData.payload
         # Act
         response = ApiClient.post(url=API_ORDERS, headers={'Authorization': token}, data=payload)
         # Assert
         assert response.status_code == 200 and response.json()['success'] is True
         assert len(response.json()['order']['ingredients']) == len(payload['ingredients'])
-        assert response.json()['order']['owner']['email'] == response_create_user.json()['user']['email']
+        assert response.json()['order']['owner']['email'] == create_new_user.json()['user']['email']
 
     @allure.title('Создание заказа с ингредиентами без авторизации. Ожидаемый результат: 200')
     def test_create_new_order_without_authorization_and_with_ingredients_successfully_created(self, create_new_user):
@@ -62,8 +61,7 @@ class TestGetOrder:
     @allure.title('Получение заказа. Пользователь авторизован. Ожидаемый результат: 200')
     def test_get_order_specific_user_with_authorization_successfully_operation(self, create_new_user):
         # Arrange
-        response_create_user = create_new_user
-        token = response_create_user.json()['accessToken']
+        token = create_new_user.json()['accessToken']
         response_create_order = ApiClient.post(url=API_ORDERS, headers={'Authorization': token},
                                                data=RequestOrderData.payload)
         # Act
