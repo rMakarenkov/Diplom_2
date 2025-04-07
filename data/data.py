@@ -40,8 +40,14 @@ class ResponseUserData:
 
 
 class RequestOrderData:
-    ...
+    payload = {
+        "ingredients": ['61c0c5a71d1f82001bdaaa6c', '61c0c5a71d1f82001bdaaa72', '61c0c5a71d1f82001bdaaa70',
+                        '61c0c5a71d1f82001bdaaa7a']
+    }
 
 
 class ResponseOrderData:
-    ...
+    NOT_FOUND_INGREDIENTS_RESPONSE = {
+        "success": False,
+        "message": "Ingredient ids must be provided"
+    }

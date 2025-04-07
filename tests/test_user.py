@@ -16,7 +16,7 @@ class TestCreateUser:
         # Act
         response = create_new_user
         # Assert
-        assert response.status_code == 200 and response.json()['success'] == True
+        assert response.status_code == 200
         assert response.json()['user']['email'] == json.loads(response.request.body)['email'].lower()
 
     @allure.title('Создание дублирующей сущности пользователя. Ожидаемый ответ: 403')

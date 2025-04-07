@@ -6,3 +6,4 @@ API_LOGIN_OR_DEL = f'{BASE_URL}/auth/login'
 API_UPDATE_USER = f'{BASE_URL}/auth/user'
 
 # Order API
+API_CREATE_ORDER = f'{BASE_URL}/orders'

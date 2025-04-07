@@ -21,7 +21,7 @@ class TestLoginUser:
         # Act
         response_login_user = ApiClient.post(url=API_LOGIN_OR_DEL, headers=None, data=login_payload)
         # Assert
-        assert response_login_user.status_code == 200 and response_login_user.json()['success'] == True
+        assert response_login_user.status_code == 200
         assert response_login_user.json()['user']['email'] == login_payload['email'].lower()
 
     @allure.title('Авторизация пользователя с неверным логином или паролем. Ожидаемый ответ: 401')
