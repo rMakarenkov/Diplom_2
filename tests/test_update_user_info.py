@@ -30,7 +30,7 @@ class TestCreateUser:
     @allure.title('Обновление информации о пользователе без авторизации. Ожидаемый ответ: 401')
     def test_change_user_data_valid_data_without_authorize_failed(self, create_new_user):
         # Act
-        response_update_user = ApiClient.patch(url=API_UPDATE_USERS, headers=None,
+        response_update_user = ApiClient.patch(url=API_UPDATE_USERS,
                                                data={'email': 'upd' + create_new_user.json()['user']['email'],
                                                      'name': 'upd' + create_new_user.json()['user']['name']})
         # Assert

@@ -1,8 +1,7 @@
-from copy import deepcopy as dc
-
 import allure
 import pytest
 
+from copy import deepcopy as dc
 from api_client import ApiClient
 from data.data import RequestOrderData, ResponseOrderData
 from urls import API_ORDERS
